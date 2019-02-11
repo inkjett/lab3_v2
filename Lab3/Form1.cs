@@ -15,7 +15,7 @@ namespace Lab3
     public partial class Form1 : Form
     {
         Int32[] a;
-        ArrayList c,d, temp_arr = new ArrayList();
+        ArrayList c,d, arr_of_one = new ArrayList();
         Int32 i1, i2,temp;
         
         
@@ -42,12 +42,38 @@ namespace Lab3
            b.Text += String.Format("{0}", c) + " ";
         }
 
-        public void max_arr (ArrayList F, ref ArrayList D)
+        public void one_in_value (ArrayList F, ref ArrayList result_arr) //Вчисление наличия еденицы в элемента массива возвращает false или true
         {
-            Int32 firstNumber,secondNumber;
-            foreach (int f in F)
+            Int32 firstNumber,secondNumber, temp_value;
+            firstNumber = 0;
+            secondNumber = 0;
+            Boolean need_to_find_number=true;
+            ArrayList one_arr = new ArrayList();
+
+            for (byte i = 0; i < F.Count; i++)
             {
-                secondNumber = Convert.ToInt32(F[f]) % 10;
+
+                temp_value = Convert.ToInt32(F[i]);
+                while ((temp_value !=0)&&(need_to_find_number==true))
+                {
+                    secondNumber = temp_value % 10;
+                    firstNumber = temp_value / 10;
+                    temp_value = firstNumber;
+                    if ((firstNumber == 1) || (secondNumber == 1))
+                    { need_to_find_number = false; }
+                }
+                
+               
+                if ((firstNumber == 1) || (secondNumber == 1))
+                {
+                    Int32 temp_int = Convert.ToInt32(i);
+                    one_arr.Add(temp_int);
+                    result_arr = one_arr;
+                }
+                temp_value = 0;
+                need_to_find_number = true;
+                firstNumber = 0;
+                secondNumber = 0;
 
             }
 
@@ -125,25 +151,15 @@ namespace Lab3
                 }
                 i2++;
             }
-
             arr_out2(c, textBox8);
-
-
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e) // добавление числа перед числам где есть 1
         {
-
-            //arr_out2(c, textBox8);
-
-
-
-
-
-
-
-
-
+            arr_of_one = new ArrayList(a); 
+            arr_of_one.CopyTo(a, 0);
+            one_in_value(arr_of_one, ref arr_of_one);
+            arr_out2(arr_of_one,textBox5);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
