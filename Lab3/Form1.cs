@@ -134,7 +134,7 @@ namespace Lab3
         private void button6_Click(object sender, EventArgs e)
         {
 
-            arr_out2(c, textBox8);
+            //arr_out2(c, textBox8);
 
 
 
