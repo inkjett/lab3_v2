@@ -42,7 +42,7 @@ namespace Lab3
            b.Text += String.Format("{0}", c) + " ";
         }
 
-        public void one_in_value (ArrayList F, ref ArrayList result_arr) //Вчисление наличия еденицы в элемента массива возвращает false или true
+        public void one_in_value (ArrayList F, Int32 max_val ,ref ArrayList result_arr) //Вчисление наличия еденицы в элемента массива возвращает массив
         {
             Int32 firstNumber,secondNumber, temp_value;
             firstNumber = 0;
@@ -61,15 +61,20 @@ namespace Lab3
                     temp_value = firstNumber;
                     if ((firstNumber == 1) || (secondNumber == 1))
                     { need_to_find_number = false; }
+
                 }
-                
-               
+
+
                 if ((firstNumber == 1) || (secondNumber == 1))
                 {
                     Int32 temp_int = Convert.ToInt32(i);
-                    one_arr.Add(temp_int);
+                    one_arr.Add(max_val);
                     result_arr = one_arr;
                 }
+
+                one_arr.Add(F[i]);
+
+
                 temp_value = 0;
                 need_to_find_number = true;
                 firstNumber = 0;
@@ -78,6 +83,23 @@ namespace Lab3
             }
 
         }    
+
+
+
+        public void max_value (ArrayList G, ref Int32 max_val) //вычисление максимального числа
+        {            
+            Int32 i = 0;
+             while (i < G.Count)
+            {
+                Int32 temp = Convert.ToInt32(G[i]);
+                if (max_val < Convert.ToInt32(G[i]))
+                {
+                    max_val = Convert.ToInt32(G[i]);
+                }
+                i++;
+            }
+
+        }
             
         public Form1()
         {
@@ -126,6 +148,11 @@ namespace Lab3
 
         }
 
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
             c = new ArrayList(a);
@@ -156,10 +183,20 @@ namespace Lab3
 
         private void button6_Click(object sender, EventArgs e) // добавление числа перед числам где есть 1
         {
-            arr_of_one = new ArrayList(a); 
-            arr_of_one.CopyTo(a, 0);
-            one_in_value(arr_of_one, ref arr_of_one);
+            Int32 max_val = 0;
+            ArrayList arr_of_one_temp = new ArrayList(); // массив для id значений где есть 1 в значениях основного массива
+            ArrayList temp_arr = new ArrayList(); //темповый массив для сбора с добавлением максимального значения перед каждым элементом
+            temp_arr = new ArrayList(a);
+            arr_of_one = new ArrayList(a);
+            arr_of_one.CopyTo(a,0);
+            max_value(arr_of_one, ref max_val);
+            one_in_value(arr_of_one, max_val, ref arr_of_one_temp);
+            arr_out2(arr_of_one_temp, textBox9);
+                 
+            //textBox5.Text = Convert.ToString(max_val);
             arr_out2(arr_of_one,textBox5);
+            
+
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
